@@ -1,25 +1,25 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from "react";
+import Form from "./components/Form";
 
 function App() {
-  const [data, setData] = useState(null);
+  const [greeting, setGreeting] = useState(null);
   useEffect(() => {
-    fetch('/api')
+    fetch("/api")
       .then((res) => res.json())
-      .then((data) => setData(data.message))
-  },[data])
+      .then((greetingJSON) => setGreeting(greetingJSON.message));
+  }, [greeting]);
 
   return (
     <Fragment>
-      <div className="App">
-        <header className="App-header">
-          <p>{!data ? "Loading..." : data}</p>
+      <div>
+        <header>
+          <p>{!greeting ? "Loading..." : greeting}</p>
         </header>
       </div>
       <div>
-        
+        <Form />
       </div>
     </Fragment>
-    
   );
 }
 
