@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
-import Form from "./components/Form";
+import MatrixForm from "./components/MatrixForm";
 
 function App() {
   const [greeting, setGreeting] = useState(null);
@@ -16,9 +16,7 @@ function App() {
           <p>{!greeting ? "Loading..." : greeting}</p>
         </header>
       </div>
-      <div>
-        <Form />
-      </div>
+      <MatrixForm />
     </Fragment>
   );
 }
