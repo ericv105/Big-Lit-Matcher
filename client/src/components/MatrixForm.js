@@ -1,88 +1,92 @@
+// MatrixForm.js
 import { useState } from "react";
+import MatrixInput from "./MatrixInput";
 
 function MatrixForm() {
-  const [matrixSize, setMatrixSize] = useState({
+  const [bigMatrixSize, setBigMatrixSize] = useState({
     rows: 3,
     cols: 3,
   });
+  const [litMatrixSize, setlitMatrixSize] = useState({
+    rows: 2,
+    cols: 4,
+  });
 
-  const handleAddCol = () => {
-    const curcol = matrixSize.cols;
-    setMatrixSize((prev) => ({ ...prev, cols: curcol + 1 }));
+  const handleAddBig = () => {
+    const curBigRows = bigMatrixSize.rows;
+    const curLitCols = litMatrixSize.cols;
+    setBigMatrixSize((prev) => ({ ...prev, rows: curBigRows + 1 }));
+    setlitMatrixSize((prev) => ({ ...prev, cols: curLitCols + 1 }));
   };
 
-  const handleSubCol = () => {
-    const curcol = matrixSize.cols;
-    setMatrixSize((prev) => ({ ...prev, cols: curcol - 1 }));
+  const handleRemBig = () => {
+    const curBigRows = bigMatrixSize.rows;
+    const curLitCols = litMatrixSize.cols;
+    setBigMatrixSize((prev) => ({ ...prev, rows: curBigRows - 1 }));
+    setlitMatrixSize((prev) => ({ ...prev, cols: curLitCols - 1 }));
   };
 
-  const handleAddRow = () => {
-    const currow = matrixSize.rows;
-    setMatrixSize((prev) => ({ ...prev, rows: currow + 1 }));
+  const handleAddLit = () => {
+    const curBigCols = bigMatrixSize.cols;
+    const curLitRows = litMatrixSize.rows;
+    setBigMatrixSize((prev) => ({ ...prev, cols: curBigCols + 1 }));
+    setlitMatrixSize((prev) => ({ ...prev, rows: curLitRows + 1 }));
   };
 
-  const handleSubRow = () => {
-    const currow = matrixSize.rows;
-    setMatrixSize((prev) => ({ ...prev, rows: currow - 1 }));
+  const handleRemLit = () => {
+    const curBigCols = bigMatrixSize.cols;
+    const curLitRows = litMatrixSize.rows;
+    setBigMatrixSize((prev) => ({ ...prev, cols: curBigCols - 1 }));
+    setlitMatrixSize((prev) => ({ ...prev, rows: curLitRows - 1 }));
   };
-
-  return (
-    <div>
-      <MatrixInput
-        matrixSize={matrixSize}
-      />
-      <button onClick={handleAddRow}>Add Row</button>
-      <button onClick={handleSubRow}>Remove Row</button>
-      <button onClick={handleAddCol}>Add Column</button>
-      <button onClick={handleSubCol}>Remove Column</button>
-    </div>
-  );
-}
-
-function MatrixInput(props) {
-  let matrix = Array(props.matrixSize.rows);
-  for (let i = 0; i < props.matrixSize.rows; i++) {
-    matrix[i] = new Array(props.matrixSize.cols).fill("");
-  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     let count = 0;
-    for (let i = 0; i < props.matrixSize.rows; i++) {
-      for (let j = 0; j < props.matrixSize.cols; j++) {
-        matrix[i][j] = event.target[count].value;
+    let bigMatrix = Array(bigMatrixSize.rows);
+    for (let i = 0; i < bigMatrixSize.rows; i++) {
+      bigMatrix[i] = new Array(bigMatrixSize.cols).fill("");
+    }
+    let litMatrix = Array(litMatrixSize.rows);
+    for (let i = 0; i < litMatrixSize.rows; i++) {
+      litMatrix[i] = new Array(litMatrixSize.cols).fill("");
+    }
+    for (let i = 0; i < bigMatrixSize.rows; i++) {
+      for (let j = 0; j < bigMatrixSize.cols; j++) {
+        bigMatrix[i][j] = event.target[count].value;
         count += 1;
       }
     }
-
+    for (let i = 0; i < litMatrixSize.rows; i++) {
+      for (let j = 0; j < litMatrixSize.cols; j++) {
+        litMatrix[i][j] = event.target[count].value;
+        count += 1;
+      }
+    }
     fetch("/api", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({matrix}),
-    }).then((res) => res.json())
-      .then((matchJSON) => console.log(matchJSON))
+      body: JSON.stringify({ bigMatrix, litMatrix }),
+    })
+      .then((res) => res.json())
+      .then((matchJSON) => console.log(matchJSON));
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {matrix.map((row, indexRow = 1) => {
-        return (
-          <div key={indexRow}>
-            {row.map((item, indexColumn = 1) => {
-              return (
-                <input
-                  key={indexRow + " " + indexColumn}
-                  type="text"
-                  defaultValue={""}
-                  name={indexRow + "," + indexColumn}
-                />
-              );
-            })}
-          </div>
-        );
-      })}
-      <button>Submit</button>
-    </form>
+    <div>
+      <form onSubmit={handleSubmit}>
+        {/* <form> */}
+        <MatrixInput matrixSize={bigMatrixSize} />
+        <br />
+        <MatrixInput matrixSize={litMatrixSize} />
+        <button>Submit</button>
+      </form>
+
+      <button onClick={handleAddBig}>Add Big</button>
+      <button onClick={handleRemBig}>Remove Big</button>
+      <button onClick={handleAddLit}>Add Little</button>
+      <button onClick={handleRemLit}>Remove Little</button>
+    </div>
   );
 }
 
