@@ -1,3 +1,4 @@
+const util = require('./services/MatrixFormParser')
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
@@ -12,6 +13,7 @@ app.get("/api", (req, res) => {
 app.post("/api", (req, res) => {
   var prefsObject = req.body;
   // prefs object multipart => stable matching algorithm => stable matches
+  util.allStableMatchings(prefsObject)
   res.json(prefsObject);
 });
 
