@@ -1,8 +1,11 @@
 import React, { useState, useEffect, Fragment } from "react";
 import MatrixForm from "./components/MatrixForm";
+import Results from "./components/Results";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [greeting, setGreeting] = useState(null);
+  const [matchings, setMatchings] = useState(null);
   useEffect(() => {
     fetch("/api")
       .then((res) => res.json())
@@ -16,7 +19,8 @@ function App() {
           <p>{!greeting ? "Loading..." : greeting}</p>
         </header>
       </div>
-      <MatrixForm />
+      <MatrixForm setMatchings={setMatchings}/>
+      <Results matchings={matchings}/>
     </Fragment>
   );
 }

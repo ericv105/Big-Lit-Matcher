@@ -1,4 +1,8 @@
 // MatrixInput.js
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Form from "react-bootstrap/Form";
+
 function MatrixInput(props) {
   let matrix = Array(props.matrixSize.rows);
 
@@ -7,23 +11,30 @@ function MatrixInput(props) {
   }
 
   return (
-    <div>
+    <div className="mt-4">
       {matrix.map((row, indexRow = 1) => {
         return (
-          <div key={indexRow}>
+          <Form.Group as={Row} className="g-2" key={indexRow} controlId="">
+            
             {row.map((item, indexColumn = 1) => {
               return (
-                // {indexColumn === 0 ? <label>Name</label>: null}
-                <input
-                  key={indexRow + " " + indexColumn}
-                  type="text"
-                  defaultValue={""}
-                  name={indexRow + "," + indexColumn}
-                />
-                // {indexColumn === 0 ? <label>&nbsp;</label>: null}
+                <Col sm={1} key={indexRow + " " + indexColumn}>
+                  <Form.Control
+                    type="text"
+                    defaultValue={""}
+                    name={indexRow + "," + indexColumn}
+                    // size="5"
+                    placeholder={
+                      indexColumn === 0
+                        ? props.group + " " + (indexRow + 1)
+                        : "Choice " + indexColumn
+                    }
+                  />
+                  {indexColumn === 0 ? <label>&nbsp;</label> : null}
+                </Col>
               );
             })}
-          </div>
+          </Form.Group>
         );
       })}
     </div>

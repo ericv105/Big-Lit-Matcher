@@ -18,7 +18,7 @@ function allStableMatchings(choicenk, choicekn, n, k) {
       unchanged[i] = false;
       return;
     }
-    console.log(marriageCopy);
+    matchings.push(marriageCopy.slice(1));
     for (let j = i; j <= n - 1; j++) {
       breakMarriage(malecounterCopy, marriageCopy, j, count);
     }
@@ -63,11 +63,12 @@ function allStableMatchings(choicenk, choicekn, n, k) {
     }
   }
 
-  var marriage = new Array(k + 1);
+  var marriage = new Array(k + 1).fill(0);
   var counter = new Array(n + 1);
   var choice = new Array(k + 1).fill(0).map(() => new Array(n + 1).fill(0));
   var unchanged = new Array(n + 1);
   var success = false;
+  var matchings = new Array();
 
   /* bool array unchanged used to ensure that during a breakMarriage
   function call started on man i only men >= i propose. 
@@ -94,39 +95,11 @@ function allStableMatchings(choicenk, choicekn, n, k) {
     proposal(i, counter, marriage, count);
   }
   // the larger set have proposed and their optimal stable solution found
-  // STABLE MARRIAGE()
-  console.log(marriage);
+  // push solution
+  matchings.push(marriage.slice(1));
   for (let i = 1; i <= n - 1; i++) {
     breakMarriage(counter, marriage, i, count);
   }
+  return matchings;
 }
-
-// allStableMatchings(
-//   [
-//     [0, 0, 0, 0, 0, 0, 0, 0, 0],
-//     [0, 5, 3, 7, 6, 1, 2, 8, 4],
-//     [0, 8, 6, 3, 5, 7, 2, 1, 4],
-//     [0, 1, 5, 6, 2, 4, 8, 7, 3],
-//     [0, 8, 7, 3, 2, 4, 1, 5, 6],
-//     [0, 6, 4, 7, 3, 8, 1, 2, 5],
-//     [0, 2, 8, 5, 4, 6, 3, 7, 1],
-//     [0, 7, 5, 2, 1, 8, 6, 4, 3],
-//     [0, 7, 4, 1, 5, 2, 3, 6, 8],
-//     [0, 2, 3, 8, 6, 4, 1, 5, 7],
-//     [0, 8, 6, 3, 2, 1, 4, 7, 5],
-//     [0, 6, 3, 5, 2, 7, 1, 8, 4]
-//   ],
-//   [
-//     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-//     [0, 5, 7, 1, 2, 6, 8, 4, 3, 9, 10, 11],
-//     [0, 2, 3, 7, 5, 4, 1, 8, 6, 10, 11, 9],
-//     [0, 8, 5, 1, 4, 6, 2, 3, 7, 11, 9, 10],
-//     [0, 3, 2, 7, 4, 1, 6, 8, 9, 10, 5, 11],
-//     [0, 7, 2, 5, 1, 11, 9, 3, 6, 10, 8, 4],
-//     [0, 1, 6, 7, 5, 9, 11, 10, 8, 4, 2, 3],
-//     [0, 2, 5, 7, 11, 10, 6, 9, 3, 4, 8, 1],
-//     [0, 3, 8, 4, 5, 9, 7, 10, 2, 6, 11, 1]
-//   ],
-//   11,
-//   8
-// );
+module.exports = { allStableMatchings };

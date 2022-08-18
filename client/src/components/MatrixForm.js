@@ -1,8 +1,10 @@
 // MatrixForm.js
 import { useState } from "react";
+import Form from "react-bootstrap/Form";
+import Button from 'react-bootstrap/Button';
 import MatrixInput from "./MatrixInput";
 
-function MatrixForm() {
+function MatrixForm(props) {
   const [bigMatrixSize, setBigMatrixSize] = useState({
     rows: 3,
     cols: 3,
@@ -42,7 +44,7 @@ function MatrixForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    let count = 0;
+    let count = 4;
     let bigMatrix = Array(bigMatrixSize.rows);
     for (let i = 0; i < bigMatrixSize.rows; i++) {
       bigMatrix[i] = new Array(bigMatrixSize.cols).fill("");
@@ -69,23 +71,24 @@ function MatrixForm() {
       body: JSON.stringify({ bigMatrix, litMatrix }),
     })
       .then((res) => res.json())
-      .then((matchJSON) => console.log(matchJSON));
+      .then((matchJSON) => props.setMatchings(matchJSON));
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        {/* <form> */}
-        <MatrixInput matrixSize={bigMatrixSize} />
-        <br />
-        <MatrixInput matrixSize={litMatrixSize} />
-        <button>Submit</button>
-      </form>
-
-      <button onClick={handleAddBig}>Add Big</button>
-      <button onClick={handleRemBig}>Remove Big</button>
-      <button onClick={handleAddLit}>Add Little</button>
-      <button onClick={handleRemLit}>Remove Little</button>
+      <Form onSubmit={handleSubmit}>
+        <Button variant="outline-secondary" size="sm" onClick={handleAddBig}>Add Big</Button>{' '}
+        <Button variant="outline-secondary" size="sm" onClick={handleRemBig}>Remove Big</Button>{' '}
+        <Button variant="outline-secondary" size="sm" onClick={handleAddLit}>Add Little</Button>{' '}
+        <Button variant="outline-secondary" size="sm" onClick={handleRemLit}>Remove Little</Button>
+        <Form.Group>
+          <MatrixInput matrixSize={bigMatrixSize} group={"Big"} />
+        </Form.Group>
+        <Form.Group>
+          <MatrixInput matrixSize={litMatrixSize} group={"Little"} />
+        </Form.Group>
+        <Button variant="primary" type="submit">Submit</Button>
+      </Form>
     </div>
   );
 }

@@ -12,9 +12,9 @@ app.get("/api", (req, res) => {
 
 app.post("/api", (req, res) => {
   var prefsObject = req.body;
+  // console.log(prefsObject)
   // prefs object multipart => stable matching algorithm => stable matches
-  util.allStableMatchings(prefsObject)
-  res.json(prefsObject);
+  res.json(util.getAllStableMatchings(prefsObject));
 });
 
 app.listen(port, () => {
