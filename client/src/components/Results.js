@@ -1,24 +1,27 @@
 import Table from "react-bootstrap/Table";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 function Results(props) {
-  // console.log(props.matchings)
   return props.matchings ? (
-    <div>
+    <Row>
       {props.matchings.map((matching) => {
         return (
-          <Table>
-            {matching.map((pair) => {
-              return (
-                <tr>
-                  <td>{pair[0]}</td>
-                  <td>{pair[1]}</td>
-                </tr>
-              );
-            })}
-          </Table>
+          <Col>
+            <Table striped bordered hover>
+              {matching.map((pair) => {
+                return (
+                  <tr>
+                    <td>{pair[0]}</td>
+                    <td>{pair[1]}</td>
+                  </tr>
+                );
+              })}
+            </Table>
+          </Col>
         );
       })}
-    </div>
+    </Row>
   ) : null;
 }
 

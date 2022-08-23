@@ -18,7 +18,7 @@ function MatrixInput(props) {
             
             {row.map((item, indexColumn = 1) => {
               return (
-                <Col sm={1} key={indexRow + " " + indexColumn}>
+                <Col key={indexRow + " " + indexColumn}>
                   <Form.Control
                     type="text"
                     defaultValue={""}

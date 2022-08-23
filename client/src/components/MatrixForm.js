@@ -7,10 +7,10 @@ import MatrixInput from "./MatrixInput";
 function MatrixForm(props) {
   const [bigMatrixSize, setBigMatrixSize] = useState({
     rows: 3,
-    cols: 3,
+    cols: 4,
   });
   const [litMatrixSize, setlitMatrixSize] = useState({
-    rows: 2,
+    rows: 3,
     cols: 4,
   });
 
@@ -75,19 +75,23 @@ function MatrixForm(props) {
   };
 
   return (
-    <div>
+    <div style={{display: "flex", justifyContent: "center"}}>
       <Form onSubmit={handleSubmit}>
-        <Button variant="outline-secondary" size="sm" onClick={handleAddBig}>Add Big</Button>{' '}
-        <Button variant="outline-secondary" size="sm" onClick={handleRemBig}>Remove Big</Button>{' '}
-        <Button variant="outline-secondary" size="sm" onClick={handleAddLit}>Add Little</Button>{' '}
-        <Button variant="outline-secondary" size="sm" onClick={handleRemLit}>Remove Little</Button>
+        <div style={{display: "flex", justifyContent: "center"}}>
+          <Button variant="outline-secondary" size="sm" onClick={handleAddBig}>Add Big</Button>{' '}
+          <Button variant="outline-secondary" size="sm" onClick={handleRemBig}>Remove Big</Button>{' '}
+          <Button variant="outline-secondary" size="sm" onClick={handleAddLit}>Add Little</Button>{' '}
+          <Button variant="outline-secondary" size="sm" onClick={handleRemLit}>Remove Little</Button>
+        </div>
         <Form.Group>
           <MatrixInput matrixSize={bigMatrixSize} group={"Big"} />
         </Form.Group>
         <Form.Group>
           <MatrixInput matrixSize={litMatrixSize} group={"Little"} />
         </Form.Group>
-        <Button variant="primary" type="submit">Submit</Button>
+        <div style={{display: "flex", justifyContent: "center"}}>
+          <Button variant="primary" type="submit">Submit</Button>
+        </div>
       </Form>
     </div>
   );
