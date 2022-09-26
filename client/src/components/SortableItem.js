@@ -14,12 +14,17 @@ export function SortableItem(props) {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    display: 'inline-block'
+    display: 'inline-block',
+    textAlign: 'center',
+    width: '100px',
+    padding: '5px',
+    border: '1px solid blue',
+    backgroundColor: 'yellow',
   };
   
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      {props.id}
+      <h1>{props.show}</h1>
     </div>
   );
 }

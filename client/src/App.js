@@ -73,9 +73,9 @@ function App() {
         memToName={memToName}
         setMem={setMemToName}
       />
-      {console.log(allPrefs)}
+      {/* {console.log(allPrefs)} */}
       <Preference
-        memberType="Big"
+        prefType={"bigPrefs"}
         getName={getName}
         allPrefs={allPrefs}
         setAllPrefs={setAllPrefs}

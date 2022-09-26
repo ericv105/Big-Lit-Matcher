@@ -16,8 +16,9 @@ import {
 
 import { SortableItem } from "./SortableItem";
 
-function Preference({ getName, memberType}) {
+function Preference({ prefType, getName, allPrefs, setAllPrefs }) {
   const [items, setItems] = useState([1, 2, 3]);
+
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -26,19 +27,25 @@ function Preference({ getName, memberType}) {
   );
 
   return (
-    <div>
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragEnd={handleDragEnd}
-      >
-        <SortableContext items={items} strategy={horizontalListSortingStrategy}>
-          {items.map((id) => (
-            <SortableItem key={id} id={id} />
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragEnd={handleDragEnd}
+    >
+      {Object.keys(allPrefs[prefType]).map((val, i) => (
+        <SortableContext
+          key={i}
+          items={allPrefs[prefType][val]}
+          strategy={horizontalListSortingStrategy}
+        >
+          <h1 style={{display: 'inline-block'}}>{getName(val)}</h1>
+          {allPrefs[prefType][val].map((pref) => (
+            <SortableItem key={pref + i} id={pref} show={getName(pref)}/>
           ))}
+          <br />
         </SortableContext>
-      </DndContext>
-    </div>
+      ))}
+    </DndContext>
   );
 
   function handleDragEnd(event) {
