@@ -16,15 +16,14 @@ export function SortableItem(props) {
     transition,
     display: 'inline-block',
     textAlign: 'center',
-    width: '100px',
-    padding: '5px',
+    padding: '10px',
     border: '1px solid blue',
     backgroundColor: 'yellow',
   };
   
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <h1>{props.show}</h1>
+      <h2>{props.show}</h2>
     </div>
   );
 }

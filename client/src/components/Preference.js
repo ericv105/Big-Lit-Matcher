@@ -17,8 +17,6 @@ import {
 import { SortableItem } from "./SortableItem";
 
 function Preference({ prefType, getName, allPrefs, setAllPrefs }) {
-  const [items, setItems] = useState([1, 2, 3]);
-
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -34,13 +32,20 @@ function Preference({ prefType, getName, allPrefs, setAllPrefs }) {
     >
       {Object.keys(allPrefs[prefType]).map((val, i) => (
         <SortableContext
-          key={i}
-          items={allPrefs[prefType][val]}
+          key={val}
+          id={val + "," + prefType}
+          items={allPrefs[prefType][val].map((elem, index) => {
+            return elem + "," + val + "," + index;
+          })}
           strategy={horizontalListSortingStrategy}
         >
-          <h1 style={{display: 'inline-block'}}>{getName(val)}</h1>
-          {allPrefs[prefType][val].map((pref) => (
-            <SortableItem key={pref + i} id={pref} show={getName(pref)}/>
+          <h1 style={{ display: "inline-block" }}>{getName(val)}</h1>
+          {allPrefs[prefType][val].map((pref, id) => (
+            <SortableItem
+              key={val + pref}
+              id={pref + "," + val + "," + id}
+              show={getName(pref)}
+            />
           ))}
           <br />
         </SortableContext>
@@ -50,14 +55,17 @@ function Preference({ prefType, getName, allPrefs, setAllPrefs }) {
 
   function handleDragEnd(event) {
     const { active, over } = event;
-
+    const [chooser, type] = active.data.current.sortable.containerId.split(",");
+    const oldIndex = active.id.split(",")[2];
+    const newIndex = over.id.split(",")[2];
     if (active.id !== over.id) {
-      setItems((items) => {
-        const oldIndex = items.indexOf(active.id);
-        const newIndex = items.indexOf(over.id);
-
-        return arrayMove(items, oldIndex, newIndex);
-      });
+      setAllPrefs((allPrefs) => ({
+        ...allPrefs,
+        [type]: {
+          ...allPrefs[type],
+          [chooser]: arrayMove(allPrefs[type][chooser], oldIndex, newIndex),
+        },
+      }));
     }
   }
 }

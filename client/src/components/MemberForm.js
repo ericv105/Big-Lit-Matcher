@@ -18,7 +18,6 @@ function MemberForm({ getName, memberType, members, setMembers, memToName, setMe
   };
   const handleRem = () => {
     setMembers(members.slice(0, members.length - 1));
-    console.log(memToName);
   };
   return (
     <div style={{ display: "flex" }}>

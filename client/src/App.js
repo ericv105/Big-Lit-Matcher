@@ -19,29 +19,29 @@ function App() {
   //   L2: ["B1", "B2", "B3"],
   //   L3: ["B1", "B2", "B3"],
   // });
-  const [allPrefs, setAllPrefs] = useState({ 
+  const [allPrefs, setAllPrefs] = useState({
     bigPrefs: {
       B1: ["L1", "L2", "L3"],
       B2: ["L1", "L2", "L3"],
       B3: ["L1", "L2", "L3"],
-    }, 
+    },
     litPrefs: {
       L1: ["B1", "B2", "B3"],
       L2: ["B1", "B2", "B3"],
       L3: ["B1", "B2", "B3"],
-    }
+    },
   });
   useEffect(() => {
     // update prefs on every add/del of members
-    var bp = {}
+    var bp = {};
     for (let i = 0; i < bigs.length; i++) {
-      bp[bigs[i]] = lits
+      bp[bigs[i]] = lits;
     }
-    var lp = {}
+    var lp = {};
     for (let i = 0; i < lits.length; i++) {
-      lp[lits[i]] = bigs
+      lp[lits[i]] = bigs;
     }
-    setAllPrefs({bigPrefs: bp, litPrefs: lp})
+    setAllPrefs({ bigPrefs: bp, litPrefs: lp });
   }, [bigs, lits]);
   const getName = (val) => {
     if (val in memToName) {
@@ -73,9 +73,17 @@ function App() {
         memToName={memToName}
         setMem={setMemToName}
       />
+      <hr/>
       {/* {console.log(allPrefs)} */}
       <Preference
         prefType={"bigPrefs"}
+        getName={getName}
+        allPrefs={allPrefs}
+        setAllPrefs={setAllPrefs}
+      />
+      <hr/>
+      <Preference
+        prefType={"litPrefs"}
         getName={getName}
         allPrefs={allPrefs}
         setAllPrefs={setAllPrefs}
