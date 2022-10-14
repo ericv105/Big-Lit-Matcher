@@ -1,4 +1,5 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect } from "react";
+import Button from "react-bootstrap/esm/Button";
 // import Results from "./components/Results";
 import "bootstrap/dist/css/bootstrap.min.css";
 import MemberForm from "./components/MemberForm";
@@ -55,10 +56,10 @@ function App() {
     return val;
   };
   return (
-    <Fragment>
+    <div style={{margin: '50px 5%'}}>
       {/* <MatrixForm setMatchings={setMatchings}/> */}
       <MemberForm
-        memberType="Big"
+        memberType="Bigs"
         getName={getName}
         members={bigs}
         setMembers={setBigs}
@@ -66,14 +67,14 @@ function App() {
         setMem={setMemToName}
       />
       <MemberForm
-        memberType="Little"
+        memberType="Littles"
         getName={getName}
         members={lits}
         setMembers={setLits}
         memToName={memToName}
         setMem={setMemToName}
       />
-      <hr/>
+      <hr />
       {/* {console.log(allPrefs)} */}
       <Preference
         prefType={"bigPrefs"}
@@ -81,15 +82,19 @@ function App() {
         allPrefs={allPrefs}
         setAllPrefs={setAllPrefs}
       />
-      <hr/>
+      <hr />
       <Preference
         prefType={"litPrefs"}
         getName={getName}
         allPrefs={allPrefs}
         setAllPrefs={setAllPrefs}
       />
+      <br/>
+      <div className="d-grid gap-2">
+      <Button variant='primary' size="lg">Get All Matchings!</Button>
+      </div>
       {/* <Results matchings={matchings}/> */}
-    </Fragment>
+    </div>
   );
 }
 

@@ -1,29 +1,28 @@
-import React from 'react';
-import {useSortable} from '@dnd-kit/sortable';
-import {CSS} from '@dnd-kit/utilities';
+import React from "react";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 export function SortableItem(props) {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: props.id });
+
+  const newStyle = {
+    transform: CSS.Translate.toString(transform),
     transition,
-  } = useSortable({id: props.id});
-  
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    display: 'inline-block',
-    textAlign: 'center',
-    padding: '10px',
-    border: '1px solid blue',
-    backgroundColor: 'yellow',
+    display: "inline-block",
+    backgroundColor: 'white', 
+    borderStyle: "solid",
+    borderWidth: "0 0 0 3px",
+    borderRadius: "2px",
+    borderLeftColor: "#7193f1",
+    boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)",
+    padding: '5px 10px',
+    margin: '3px',
   };
-  
+
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <h2>{props.show}</h2>
-    </div>
+    <p ref={setNodeRef} style={newStyle} {...attributes} {...listeners}>
+      {props.show}
+    </p>
   );
 }

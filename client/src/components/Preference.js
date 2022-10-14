@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import {
   DndContext,
   closestCenter,
@@ -31,6 +33,7 @@ function Preference({ prefType, getName, allPrefs, setAllPrefs }) {
       onDragEnd={handleDragEnd}
     >
       {Object.keys(allPrefs[prefType]).map((val, i) => (
+        <Row>
         <SortableContext
           key={val}
           id={val + "," + prefType}
@@ -39,7 +42,10 @@ function Preference({ prefType, getName, allPrefs, setAllPrefs }) {
           })}
           strategy={horizontalListSortingStrategy}
         >
-          <h1 style={{ display: "inline-block" }}>{getName(val)}</h1>
+          <Col xs="auto">
+            <h4 style={{ display: "inline-block" }}>{getName(val)}:&nbsp;</h4>
+          </Col>
+          <Col>
           {allPrefs[prefType][val].map((pref, id) => (
             <SortableItem
               key={val + pref}
@@ -47,8 +53,10 @@ function Preference({ prefType, getName, allPrefs, setAllPrefs }) {
               show={getName(pref)}
             />
           ))}
+          </Col>
           <br />
         </SortableContext>
+        </Row>
       ))}
     </DndContext>
   );
