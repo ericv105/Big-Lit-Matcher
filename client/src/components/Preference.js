@@ -33,29 +33,28 @@ function Preference({ prefType, getName, allPrefs, setAllPrefs }) {
       onDragEnd={handleDragEnd}
     >
       {Object.keys(allPrefs[prefType]).map((val, i) => (
-        <Row>
-        <SortableContext
-          key={val}
-          id={val + "," + prefType}
-          items={allPrefs[prefType][val].map((elem, index) => {
-            return elem + "," + val + "," + index;
-          })}
-          strategy={horizontalListSortingStrategy}
-        >
-          <Col xs="auto">
-            <h4 style={{ display: "inline-block" }}>{getName(val)}:&nbsp;</h4>
-          </Col>
-          <Col>
-          {allPrefs[prefType][val].map((pref, id) => (
-            <SortableItem
-              key={val + pref}
-              id={pref + "," + val + "," + id}
-              show={getName(pref)}
-            />
-          ))}
-          </Col>
-          <br />
-        </SortableContext>
+        <Row key={val}>
+          <SortableContext
+            id={val + "," + prefType}
+            items={allPrefs[prefType][val].map((elem, index) => {
+              return elem + "," + val + "," + index;
+            })}
+            strategy={horizontalListSortingStrategy}
+          >
+            <Col xs="auto">
+              <h4 style={{ display: "inline-block" }}>{getName(val)}:&nbsp;</h4>
+            </Col>
+            <Col>
+              {allPrefs[prefType][val].map((pref, id) => (
+                <SortableItem
+                  key={val + pref}
+                  id={pref + "," + val + "," + id}
+                  show={getName(pref)}
+                />
+              ))}
+            </Col>
+            <br />
+          </SortableContext>
         </Row>
       ))}
     </DndContext>

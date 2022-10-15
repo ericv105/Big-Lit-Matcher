@@ -55,8 +55,17 @@ function App() {
     }
     return val;
   };
+  const handleSubmit = () => {
+    fetch("/api", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(allPrefs),
+    })
+      .then((res) => res.json())
+      .then((matchJSON) => console.log(matchJSON));
+  };
   return (
-    <div style={{margin: '50px 5%'}}>
+    <div style={{ margin: "50px 5%" }}>
       {/* <MatrixForm setMatchings={setMatchings}/> */}
       <MemberForm
         memberType="Bigs"
@@ -89,9 +98,11 @@ function App() {
         allPrefs={allPrefs}
         setAllPrefs={setAllPrefs}
       />
-      <br/>
+      <br />
       <div className="d-grid gap-2">
-      <Button variant='primary' size="lg">Get All Matchings!</Button>
+        <Button variant="primary" size="lg" onClick={handleSubmit}>
+          Get All Matchings!
+        </Button>
       </div>
       {/* <Results matchings={matchings}/> */}
     </div>

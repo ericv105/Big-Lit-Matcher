@@ -32,10 +32,9 @@ function MemberForm({
       <Form.Group as={Row}>
         {members.map((val, i) => {
           return (
-            <Col>
+            <Col key={i}>
               <Form.Control
                 size="sm"
-                key={i}
                 type="text"
                 defaultValue={getName(val)}
                 onBlur={(e) => handleBlur(e, val)}
