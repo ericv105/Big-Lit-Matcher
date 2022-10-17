@@ -11,11 +11,27 @@ function MemberForm({
   memToName,
   setMem,
 }) {
+  const getPlaceholder = (val) => {
+    if (val.substring(0, 1) === "B") {
+      return "Big " + val.substring(1);
+    } else if (val.substring(0, 1) === "L") {
+      return "Little " + val.substring(1);
+    }
+    return val;
+  }
   const handleBlur = (event, val) => {
-    setMem((prevState) => ({
-      ...prevState,
-      [val]: event.target.value,
-    }));
+    if (event.target.value !== '') {
+      setMem((prevState) => ({
+        ...prevState,
+        [val]: event.target.value,
+      }));
+    } else {
+      setMem(current => {
+        const copy = {...current}
+        delete copy[[val]]
+        return copy;
+      })
+    }
   };
   const handleAdd = () => {
     const mem = memberType.slice(0, 1) + (members.length + 1);
@@ -36,13 +52,13 @@ function MemberForm({
               <Form.Control
                 size="sm"
                 type="text"
-                defaultValue={getName(val)}
+                placeholder={getPlaceholder(val)}
                 onBlur={(e) => handleBlur(e, val)}
               />
             </Col>
           );
         })}
-        <Col xs={2} style={{textAlign: 'center'}}> 
+        <Col xs={2} style={{ textAlign: "center" }}>
           <Button variant="light" onClick={handleAdd}>
             +
           </Button>
