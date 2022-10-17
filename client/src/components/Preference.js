@@ -1,6 +1,7 @@
 import React from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/esm/Button";
 import {
   DndContext,
   closestCenter,
@@ -57,9 +58,27 @@ function Preference({ prefType, getName, allPrefs, setAllPrefs }) {
           </SortableContext>
         </Row>
       ))}
+      <Button variant="secondary" size="sm" onClick={handleShuffle}>
+        Randomize
+      </Button>
     </DndContext>
   );
 
+  function handleShuffle() {
+    Object.keys(allPrefs[prefType]).forEach((key) => {
+      allPrefs[prefType][key] = shuffleArr(allPrefs[prefType][key].slice())
+    });
+    const cpy = {...allPrefs}
+    setAllPrefs(cpy)
+
+    function shuffleArr(a) {
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+  }
   function handleDragEnd(event) {
     const { active, over } = event;
     const [chooser, type] = active.data.current.sortable.containerId.split(",");

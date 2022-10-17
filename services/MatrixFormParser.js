@@ -23,7 +23,7 @@ function getAllStableMatchings(prefsObj) {
 
   // input into stable matching algorithm
   var matchings;
-  if (bigMtx.length >= litMtx.length) {
+  if (bigMtx.length > litMtx.length) {
     matchings = algo.allStableMatchings(
       bigMtx,
       litMtx,
