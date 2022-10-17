@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/esm/Button";
-import Row from "react-bootstrap/esm/Row";
-import Col from "react-bootstrap/esm/Col";
 import "bootstrap/dist/css/bootstrap.min.css";
 import MemberForm from "./components/MemberForm";
 import Preference from "./components/Preference";
@@ -75,24 +73,20 @@ function App() {
       />
       <hr />
       {/* {console.log(allPrefs)} */}
-      <Row>
-        <Col>
-          <Preference
-            prefType={"bigPrefs"}
-            getName={getName}
-            allPrefs={allPrefs}
-            setAllPrefs={setAllPrefs}
-          />
-        </Col>
-        <Col>
-          <Preference
-            prefType={"litPrefs"}
-            getName={getName}
-            allPrefs={allPrefs}
-            setAllPrefs={setAllPrefs}
-          />
-        </Col>
-      </Row>
+      <Preference
+        prefType={"bigPrefs"}
+        getName={getName}
+        allPrefs={allPrefs}
+        setAllPrefs={setAllPrefs}
+      />
+      <br/>
+      <br/>
+      <Preference
+        prefType={"litPrefs"}
+        getName={getName}
+        allPrefs={allPrefs}
+        setAllPrefs={setAllPrefs}
+      />
       <hr />
       <div className="d-grid gap-2">
         <Button variant="primary" size="lg" onClick={handleSubmit}>
