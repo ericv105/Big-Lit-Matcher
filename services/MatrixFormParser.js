@@ -1,28 +1,29 @@
 const algo = require("./AllStableMatchings");
 
 function getAllStableMatchings(prefsObj) {
-  bigMtx = prefsObj.bigMatrix;
-  litMtx = prefsObj.litMatrix;
+  bigObj = prefsObj["bigPrefs"];
+  litObj = prefsObj["litPrefs"];
 
   // head of each array into its own array
-  bigArr = bigMtx.map((arr) => arr[0]);
-  litArr = litMtx.map((arr) => arr[0]);
+  bigArr = Object.keys(bigObj);
+  litArr = Object.keys(litObj);
 
   // change each name in matrix to appropriate integer based on index
-  bigMtx = bigMtx.map((outer) =>
-    outer.map((inner) => litArr.indexOf(inner) + 1)
-  );
-  litMtx = litMtx.map((outer) =>
-    outer.map((inner) => bigArr.indexOf(inner) + 1)
+  bigMtx = Object.values(bigObj).map((outer) =>
+    [0].concat(outer.map((inner) => litArr.indexOf(inner) + 1))
   );
 
-  // prepend an array of zeros of the same length
-  bigMtx = [Array(bigMtx[0].length).fill(0), ...bigMtx];
-  litMtx = [Array(litMtx[0].length).fill(0), ...litMtx];
+  litMtx = Object.values(litObj).map((outer) =>
+    [0].concat(outer.map((inner) => bigArr.indexOf(inner) + 1))
+  );
+
+  // // prepend an array of zeros of the same length
+  bigMtx.unshift(Array(bigMtx[0].length).fill(0));
+  litMtx.unshift(Array(litMtx[0].length).fill(0));
 
   // input into stable matching algorithm
   var matchings;
-  if (bigMtx.length >= litMtx.length) {
+  if (bigMtx.length > litMtx.length) {
     matchings = algo.allStableMatchings(
       bigMtx,
       litMtx,
@@ -30,8 +31,8 @@ function getAllStableMatchings(prefsObj) {
       litMtx.length - 1
     );
     matchings = matchings.map((outer) =>
-    outer.map((inner) => [litArr[outer.indexOf(inner)], bigArr[inner-1]])
-  );
+      outer.map((inner) => [litArr[outer.indexOf(inner)], bigArr[inner - 1]])
+    );
   } else {
     matchings = algo.allStableMatchings(
       litMtx,
@@ -40,14 +41,12 @@ function getAllStableMatchings(prefsObj) {
       bigMtx.length - 1
     );
     matchings = matchings.map((outer) =>
-    outer.map((inner) => [bigArr[outer.indexOf(inner)], litArr[inner-1]])
-  );
+      outer.map((inner) => [bigArr[outer.indexOf(inner)], litArr[inner - 1]])
+    );
   }
 
   // all stable matchings produced
   // matchings[i][j] is the person that person j from the smaller group chooses.
-  
-  console.log(matchings)
   return matchings;
 }
 
