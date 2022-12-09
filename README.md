@@ -1,5 +1,5 @@
 # Big Little Matcher
-[Click here to visit the web app!](http://big-lit-matcher.herokuapp.com/)
+[Click here to visit the web app!](https://big-little-matcher.onrender.com/)
 
 Big Little Matcher is a tool that can be used by organizations to help figure out pairings between new members and current members.
 
