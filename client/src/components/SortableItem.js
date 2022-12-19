@@ -8,6 +8,7 @@ export function SortableItem(props) {
 
   const newStyle = {
     transform: CSS.Translate.toString(transform),
+    touchAction: 'none',
     transition,
     display: "inline-block",
     backgroundColor: 'white', 
